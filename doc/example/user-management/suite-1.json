@@ -1,0 +1,52 @@
+{
+  "title": "Test suite containing user management system tests",
+  "label": ["suite-1"],
+  "type": "json",
+  "declare": {
+    "userName": "John Doe",
+    "userAge": "30",
+    "baseUrl": "http://localhost"
+  },
+  "cases": [
+    {
+      "title": "Test if user created successfully",
+      "label": ["case-1"],
+      "scenario": [
+        {
+          "try": {
+            "type": "POST",
+            "url": "${baseUrl}/create",
+            "payload": {
+              "name": "${userName}",
+              "age": "${userAge}"
+            }
+          },
+          "verify": {
+            "status": "200",
+            "schema": {
+              "errorCode": "0",
+              "errorMessage": "#emptyString()",
+              "data": {
+                "userId": "#numeric()|#extract(userId)"
+              }
+            }
+          }
+        },
+        {
+          "try": {
+            "type": "GET",
+            "url": "${baseUrl}/get-user/${userId}"
+          },
+          "verify": {
+            "status": "200",
+            "schema": {
+              "userId": "${userId}",
+              "name": "${userName}",
+              "age": "${userAge}"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "title": "Test suite containing user management system tests",
   "label": ["suite-1"],
-  "type": "json",
+  "protocol": "json",
   "declare": {
     "userName": "John Doe",
     "userAge": "30",
@@ -10,11 +10,11 @@
   "cases": [
     {
       "title": "Test if user created successfully",
-      "label": ["case-1"],
-      "scenario": [
+      "labels": ["case-1"],
+      "scenarios": [
         {
           "try": {
-            "type": "POST",
+            "method": "POST",
             "url": "${baseUrl}/create",
             "payload": {
               "name": "${userName}",
@@ -34,7 +34,7 @@
         },
         {
           "try": {
-            "type": "GET",
+            "method": "GET",
             "url": "${baseUrl}/get-user/${userId}"
           },
           "verify": {

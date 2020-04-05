@@ -12,15 +12,13 @@ import (
 	"reflect"
 )
 
-func RunSuite(suite model.Suite) error {
+func RunSuite(suite model.Suite) {
 
 	declarationMap := suite.Declare
 
 	for _, testCase := range suite.Cases {
 		runCase(testCase, declarationMap)
 	}
-
-	return nil
 }
 
 func runCase(testCase model.Case, declaration model.Declaration) {

@@ -23,10 +23,6 @@ func main() {
 		panic(err)
 	}
 
-	err = suite.RunSuite(*s)
-
-	if err != nil {
-		panic(err)
-	}
+	suite.RunSuite(*s)
 
 }

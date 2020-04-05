@@ -1,37 +1,37 @@
 package model
 
-type Protocol int
-type HttpMethod int
-type HttpStatus int
+type Protocol string
+type HttpMethod string
+type HttpStatus string
 
-type Declaration interface{}
+type Declaration map[string]interface{}
 
 type TryScenario struct {
-	method  HttpMethod
-	url     string
-	payload interface{}
+	Method  HttpMethod
+	Url     string
+	Payload interface{}
 }
 
 type VerifyScenario struct {
-	status HttpStatus
-	schema interface{}
+	Status HttpStatus
+	Schema *map[string]interface{}
 }
 
 type Scenario struct {
-	try    TryScenario
-	verify VerifyScenario
+	Try    TryScenario
+	Verify VerifyScenario
 }
 
 type Case struct {
-	title     string
-	labels    []string
-	scenarios []Scenario
+	Title     string
+	Labels    []string
+	Scenarios []Scenario
 }
 
 type Suite struct {
-	title    string
-	label    []string
-	protocol Protocol
-	declare  Declaration
-	cases    []Case
+	Title    string      `json:"title"`
+	Label    []string    `json:"Label"`
+	Protocol Protocol    `json:"protocol"`
+	Declare  Declaration `json:"declare"`
+	Cases    []Case      `json:"cases"`
 }

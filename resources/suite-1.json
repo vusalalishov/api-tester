@@ -1,0 +1,38 @@
+{
+  "title": "Test suite containing user management system tests",
+  "label": ["suite-1"],
+  "protocol": "json",
+  "declare": {
+    "userName": "John Doe",
+    "userAge": "30",
+    "baseUrl": "http://localhost"
+  },
+  "cases": [
+    {
+      "title": "Test if user created successfully",
+      "labels": ["case-1"],
+      "scenarios": [
+        {
+          "try": {
+            "method": "POST",
+            "url": "http://localhost:3000/create",
+            "payload": {
+              "name": "${userName}",
+              "age": "${userAge}"
+            }
+          },
+          "verify": {
+            "status": "200",
+            "schema": {
+              "errorCode": "0",
+              "errorMessage": "",
+              "data": {
+                "userId": "1"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

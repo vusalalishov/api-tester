@@ -1,15 +1,15 @@
 package model
 
 const (
-	JSON Protocol = "1"
-	GRPC Protocol = "2"
+	JSON Protocol = "json"
+	GRPC Protocol = "grpc"
 )
 
 const (
-	POST   HttpMethod = "1"
-	GET    HttpMethod = "2"
-	PUT    HttpMethod = "3"
-	DELETE HttpMethod = "4"
-	PATCH  HttpMethod = "5"
-	HEAD   HttpMethod = "6"
+	POST   HttpMethod = "POST"
+	GET    HttpMethod = "GET"
+	PUT    HttpMethod = "PUT"
+	DELETE HttpMethod = "DELETE"
+	PATCH  HttpMethod = "PATCH"
+	HEAD   HttpMethod = "HEAD"
 )

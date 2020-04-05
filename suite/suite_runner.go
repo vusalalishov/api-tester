@@ -97,7 +97,7 @@ func sendRequest(scenario model.TryScenario, declaration model.Declaration) (*Ht
 
 	return &HttpResponse{
 		body:   &responseBody,
-		status: model.HttpStatus(resp.Status),
+		status: model.HttpStatus(resp.StatusCode),
 	}, nil
 
 }

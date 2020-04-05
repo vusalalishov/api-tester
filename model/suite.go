@@ -2,7 +2,7 @@ package model
 
 type Protocol string
 type HttpMethod string
-type HttpStatus string
+type HttpStatus int
 
 type Declaration map[string]interface{}
 
@@ -13,7 +13,7 @@ type TryScenario struct {
 }
 
 type VerifyScenario struct {
-	Status HttpStatus
+	Status HttpStatus `json:",string"`
 	Schema *map[string]interface{}
 }
 
@@ -29,9 +29,9 @@ type Case struct {
 }
 
 type Suite struct {
-	Title    string      `json:"title"`
-	Label    []string    `json:"Label"`
-	Protocol Protocol    `json:"protocol"`
-	Declare  Declaration `json:"declare"`
-	Cases    []Case      `json:"cases"`
+	Title    string
+	Label    []string
+	Protocol Protocol
+	Declare  Declaration
+	Cases    []Case
 }

@@ -13,11 +13,8 @@ import (
 )
 
 func RunSuite(suite model.Suite) {
-
-	declarationMap := suite.Declare
-
 	for _, testCase := range suite.Cases {
-		runCase(testCase, declarationMap)
+		runCase(testCase, suite.Declaration)
 	}
 }
 

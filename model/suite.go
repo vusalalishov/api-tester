@@ -29,9 +29,9 @@ type Case struct {
 }
 
 type Suite struct {
-	Title    string
-	Label    []string
-	Protocol Protocol
-	Declare  Declaration
-	Cases    []Case
+	Title       string
+	Label       []string
+	Protocol    Protocol
+	Declaration Declaration `json:"declare"`
+	Cases       []Case
 }

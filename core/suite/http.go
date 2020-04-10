@@ -17,13 +17,17 @@ func prepareHttpRequest(scenario *model.TryScenario, declaration *model.Declarat
 		httpMethod = http.GET
 	}
 
-	payload, err := json.Marshal(scenario.Payload)
+	var reader *bytes.Reader
 
-	if err != nil {
-		return nil, err
+	if scenario.Payload != nil {
+		payload, err := json.Marshal(scenario.Payload)
+
+		if err != nil {
+			return nil, err
+		}
+
+		reader = bytes.NewReader(payload)
 	}
-
-	reader := bytes.NewReader(payload)
 
 	// TODO: add headers
 	return &http.Request{

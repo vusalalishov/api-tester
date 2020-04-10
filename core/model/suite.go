@@ -12,7 +12,7 @@ type TryScenario struct {
 	Method  HttpMethod
 	Headers HttpHeaders
 	Url     string
-	Payload interface{}
+	Payload *map[string]interface{}
 }
 
 type VerifyScenario struct {

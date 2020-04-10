@@ -14,7 +14,7 @@ func NewSuite(title string) *TestSuite {
 func (s *TestSuite) AddCase(title string) *TestCase {
 	tc := &TestCase{
 		Title:     title,
-		Scenarios: make([]TestScenario, 0),
+		Scenarios: make([]*TestScenario, 0),
 		testInfo: testInfo{
 			Status: SUCCESS,
 		},

@@ -1,11 +1,11 @@
 package suite
 
 import (
-	"api-tester/core/http"
-	"api-tester/core/log"
-	"api-tester/core/model"
 	"errors"
 	"fmt"
+	"github.com/vusalalishov/api-tester/core/http"
+	"github.com/vusalalishov/api-tester/core/log"
+	"github.com/vusalalishov/api-tester/core/model"
 	"reflect"
 )
 

@@ -1,6 +1,6 @@
 package log
 
-import "api-tester/core/http"
+import "github.com/vusalalishov/api-tester/core/http"
 
 type Status int
 

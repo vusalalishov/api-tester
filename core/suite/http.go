@@ -1,8 +1,8 @@
 package suite
 
 import (
-	"api-tester/http"
-	"api-tester/model"
+	"api-tester/core/http"
+	"api-tester/core/model"
 )
 
 func prepareHttpRequest(scenario *model.TryScenario, declaration *model.Declaration) *http.Request {

@@ -24,6 +24,8 @@ type Request struct {
 }
 
 type Response struct {
+	Status int
+	Body   *map[string]interface{}
 }
 
 func (r *Request) Execute() (*Response, error) {

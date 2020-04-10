@@ -13,6 +13,7 @@
       "labels": ["case-1"],
       "scenarios": [
         {
+          "title": "Create user!",
           "try": {
             "method": "POST",
             "url": "http://localhost:3000/create",

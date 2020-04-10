@@ -1,8 +1,8 @@
 package main
 
 import (
-	model "api-tester/model"
-	suite "api-tester/suite"
+	model "api-tester/core/model"
+	suite "api-tester/core/suite"
 	"encoding/json"
 	"io/ioutil"
 )

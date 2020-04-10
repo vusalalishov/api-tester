@@ -6,8 +6,11 @@ type HttpStatus int
 
 type Declaration map[string]interface{}
 
+type HttpHeaders map[string]interface{}
+
 type TryScenario struct {
 	Method  HttpMethod
+	Headers HttpHeaders
 	Url     string
 	Payload interface{}
 }

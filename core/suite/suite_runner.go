@@ -73,7 +73,9 @@ func verify(body *map[string]interface{}, schema *map[string]interface{}) error 
 		v := (*body)[key]
 
 		if reflect.TypeOf(v).Kind() == reflect.Map {
-			err := verify(v.(*map[string]interface{}), value.(*map[string]interface{}))
+			bodyMap := v.(map[string]interface{})
+			schemaMap := value.(map[string]interface{})
+			err := verify(&bodyMap, &schemaMap)
 			if err != nil {
 				return err
 			}

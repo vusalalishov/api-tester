@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/vusalalishov/api-tester/core/model"
 	"github.com/vusalalishov/api-tester/core/suite"
 	"io/ioutil"
@@ -23,6 +24,20 @@ func main() {
 		panic(err)
 	}
 
-	suite.RunSuite(*s)
+	log := suite.RunSuite(*s)
+
+	fmt.Println(log.Title)
+	fmt.Println(log.Status)
+
+	for _, testCase := range log.Cases {
+		fmt.Println(testCase.Title)
+		fmt.Println(testCase.Status)
+
+		for _, scenario := range testCase.Scenarios {
+			fmt.Println(scenario.Title)
+			fmt.Println(scenario.Status)
+		}
+
+	}
 
 }

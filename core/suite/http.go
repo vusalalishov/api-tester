@@ -31,6 +31,7 @@ func prepareHttpRequest(scenario *model.TryScenario, declaration *model.Declarat
 
 	// TODO: add headers
 	return &http.Request{
+		Url:    scenario.Url,
 		Method: httpMethod,
 		Body:   reader,
 	}, nil

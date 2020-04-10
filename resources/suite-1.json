@@ -45,6 +45,35 @@
           }
         }
       ]
+    },
+    {
+      "title": "Test if user retrieved successfully",
+      "labels": ["case-2"],
+      "scenarios": [
+        {
+          "title": "Get user!",
+          "try": {
+            "method": "GET",
+            "url": "http://localhost:3000/get/1"
+          },
+          "verify": {
+            "status": "200",
+            "headers": {
+              "key1": ["value1", "value2"],
+              "key3": "value3"
+            },
+            "schema": {
+              "errorCode": "0",
+              "errorMessage": "",
+              "data": {
+                "userId": "112122",
+                "name": "John Doe",
+                "age": "15"
+              }
+            }
+          }
+        }
+      ]
     }
   ]
 }

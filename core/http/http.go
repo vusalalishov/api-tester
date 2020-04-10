@@ -1,8 +1,8 @@
 package http
 
 import (
+	"bytes"
 	"errors"
-	"io"
 )
 
 type Method string
@@ -20,7 +20,7 @@ type Header struct {
 type Request struct {
 	Headers []Header
 	Method  Method
-	Body    io.Reader
+	Body    *bytes.Reader
 }
 
 type Response struct {
@@ -29,6 +29,7 @@ type Response struct {
 }
 
 func (r *Request) Execute() (*Response, error) {
+
 	return nil, errors.New("unimplemented")
 }
 

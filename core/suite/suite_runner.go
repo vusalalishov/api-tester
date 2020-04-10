@@ -48,9 +48,11 @@ func runCase(testCase *model.Case, declaration *model.Declaration, caseLog *log.
 }
 
 func sendRequest(scenario *model.TryScenario, declaration *model.Declaration) (*http.Response, error) {
-	request := prepareHttpRequest(scenario, declaration)
-	response, err := request.Execute()
-	return response, err
+	request, err := prepareHttpRequest(scenario, declaration)
+	if err != nil {
+		return nil, err
+	}
+	return request.Execute()
 }
 
 func enrichDeclaration(response *http.Response, declaration *model.Declaration) {

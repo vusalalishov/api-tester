@@ -60,7 +60,7 @@ func enrichDeclaration(response *http.Response, declaration *model.Declaration) 
 }
 
 func verifyResponse(response *http.Response, scenario *model.VerifyScenario, declaration *model.Declaration) error {
-	if response.Status != int(scenario.Status) {
+	if response.Status != http.Status(scenario.Status) {
 		return errors.New("status mismatch")
 	}
 	return verify(response.Body, scenario.Schema)

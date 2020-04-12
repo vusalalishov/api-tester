@@ -6,6 +6,7 @@ import (
 	"reflect"
 )
 
+// TODO: refactor it
 func Schema(response *interface{}, schema *interface{}, failures []error) []error {
 	if response == nil && schema == nil {
 		return failures
@@ -25,8 +26,11 @@ func Schema(response *interface{}, schema *interface{}, failures []error) []erro
 	}
 
 	if responseKind == reflect.Map {
-		responseMap := (*response).(map[string]interface{})
-		schemaMap := (*schema).(map[string]interface{})
+		responseMap, responseIsStringMap := (*response).(map[string]interface{})
+		schemaMap, schemaIsStringMap := (*schema).(map[string]interface{})
+		if !responseIsStringMap || !schemaIsStringMap {
+			failures = append(failures, errors.New("response or schema is not string map"))
+		}
 		failures = append(failures, verifyMap(&responseMap, &schemaMap, failures)...)
 	} else if responseKind == reflect.Array || responseKind == reflect.Slice {
 		responseArray := (*response).([]interface{})

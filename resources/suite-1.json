@@ -66,9 +66,14 @@
               "errorCode": "0",
               "errorMessage": "",
               "data": {
-                "userId": "112122",
+                "userId": "1",
                 "name": "John Doe",
-                "age": "15"
+                "age": "15",
+                "phoneNumbers": [
+                  "1",
+                  "2",
+                  "3"
+                ]
               }
             }
           }

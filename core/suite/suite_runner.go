@@ -6,7 +6,7 @@ import (
 	"github.com/vusalalishov/api-tester/core/http"
 	"github.com/vusalalishov/api-tester/core/log"
 	"github.com/vusalalishov/api-tester/core/model"
-	"reflect"
+	"github.com/vusalalishov/api-tester/core/verify"
 )
 
 func RunSuite(suite model.Suite) *log.TestSuite {
@@ -37,9 +37,10 @@ func runCase(testCase *model.Case, declaration *model.Declaration, caseLog *log.
 		}
 
 		enrichDeclaration(response, declaration)
-		err = verifyResponse(response, &scenario.Verify, declaration)
+		errorArr := verifyResponse(response, &scenario.Verify, declaration)
 
-		if err != nil {
+		if len(errorArr) != 0 {
+			scenarioLog.SetStatus(log.FAILED)
 			break
 		}
 	}
@@ -59,32 +60,9 @@ func enrichDeclaration(response *http.Response, declaration *model.Declaration) 
 	// TODO: implementation is missing
 }
 
-func verifyResponse(response *http.Response, scenario *model.VerifyScenario, declaration *model.Declaration) error {
+func verifyResponse(response *http.Response, scenario *model.VerifyScenario, declaration *model.Declaration) []error {
 	if response.Status != http.Status(scenario.Status) {
-		return errors.New("status mismatch")
+		return []error{errors.New("status mismatch")}
 	}
-	return verify(response.Body, scenario.Schema)
-}
-
-func verify(body *map[string]interface{}, schema *map[string]interface{}) error {
-
-	for key, value := range *schema {
-
-		v := (*body)[key]
-
-		if reflect.TypeOf(v).Kind() == reflect.Map {
-			bodyMap := v.(map[string]interface{})
-			schemaMap := value.(map[string]interface{})
-			err := verify(&bodyMap, &schemaMap)
-			if err != nil {
-				return err
-			}
-		} else {
-			if v.(string) != value.(string) {
-				return errors.New("field mismatch")
-			}
-		}
-	}
-
-	return nil
+	return verify.Schema(response.Body, scenario.Schema, make([]error, 0))
 }

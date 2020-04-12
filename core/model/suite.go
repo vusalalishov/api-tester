@@ -18,7 +18,7 @@ type TryScenario struct {
 type VerifyScenario struct {
 	Status  HttpStatus `json:",string"`
 	Headers HttpHeaders
-	Schema  *map[string]interface{}
+	Schema  *interface{}
 }
 
 type Scenario struct {

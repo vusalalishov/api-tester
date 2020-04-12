@@ -30,7 +30,7 @@ type Request struct {
 
 type Response struct {
 	Status Status
-	Body   *map[string]interface{}
+	Body   *interface{}
 }
 
 func (r *Request) Execute() (response *Response, err error) {
@@ -56,7 +56,7 @@ func (r *Request) Execute() (response *Response, err error) {
 			return nil, err
 		}
 
-		var responseBody map[string]interface{}
+		var responseBody interface{}
 
 		err = json.Unmarshal(bodyBytes, &responseBody)
 		if err != nil {

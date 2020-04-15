@@ -33,9 +33,14 @@ func Schema(response *interface{}, schema *interface{}, failures []error) []erro
 		}
 		failures = append(failures, verifyMap(&responseMap, &schemaMap, failures)...)
 	} else if responseKind == reflect.Array || responseKind == reflect.Slice {
-		responseArray := (*response).([]interface{})
-		schemaArray := (*schema).([]interface{})
-		failures = append(failures, verifyArray(&responseArray, &schemaArray, failures)...)
+		responseArray, isResponsePresent := (*response).([]interface{})
+		schemaArray, isSchemaPresent := (*schema).([]interface{})
+		if isResponsePresent && isSchemaPresent {
+			failures = append(failures, verifyArray(&responseArray, &schemaArray, failures)...)
+		} else {
+			failures = append(failures, errors.New("schema mismatch"))
+		}
+
 	} else {
 		// perform equality check
 		if *response != *schema {
@@ -47,8 +52,12 @@ func Schema(response *interface{}, schema *interface{}, failures []error) []erro
 
 func verifyMap(responseMap *map[string]interface{}, schemaMap *map[string]interface{}, failures []error) []error {
 	for key, schemaValue := range *schemaMap {
-		responseValue := (*responseMap)[key]
-		failures = append(failures, Schema(&responseValue, &schemaValue, failures)...)
+		responseValue, ok := (*responseMap)[key]
+		if ok {
+			failures = append(failures, Schema(&responseValue, &schemaValue, failures)...)
+		} else {
+			failures = append(failures, errors.New("not found by key: "+key))
+		}
 	}
 	return failures
 }

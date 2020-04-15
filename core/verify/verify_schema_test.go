@@ -31,7 +31,13 @@ func TestSchema_WillVerifyLists(t *testing.T) {
 	bytes := []byte(
 		`[
 			{
-				"a": "b"
+				"a": "b",
+				"c": [
+					{
+						"a": "k"
+					},
+					"b"
+				]
 			},
 			"c",
 			{
@@ -43,6 +49,50 @@ func TestSchema_WillVerifyLists(t *testing.T) {
 		]`)
 
 	testSuccessPath(bytes, t)
+}
+
+func TestSchema_WillFindComplexMismatch(t *testing.T) {
+	schemaBytes := []byte(
+		`[
+			{
+				"a": "b",
+				"c": [
+					{
+						"a": "k"
+					},
+					"b"
+				]
+			},
+			"c",
+			{
+				"d": "f",
+				"b": "j"
+			},
+			"a",
+			"b"
+		]`)
+
+	responseBytes := []byte(
+		`[
+			{
+				"a": "b",
+				"c": [
+					{
+						"a": "k1"
+					},
+					"b"
+				]
+			},
+			"c",
+			{
+				"d": "f",
+				"b0": "j"
+			},
+			"a",
+			"b"
+		]`)
+
+	testUnmatchedSchemaPath(schemaBytes, responseBytes, t)
 }
 
 func testSuccessPath(bytes []byte, t *testing.T) {
@@ -58,6 +108,23 @@ func testSuccessPath(bytes []byte, t *testing.T) {
 	err := verify.Schema(&response, &schema, []error{})
 
 	if len(err) != 0 {
+		t.Fail()
+	}
+}
+
+func testUnmatchedSchemaPath(schemaBytes []byte, responseBytes []byte, t *testing.T) {
+
+	var (
+		response interface{}
+		schema   interface{}
+	)
+
+	unmarshal(schemaBytes, &response, t)
+	unmarshal(responseBytes, &schema, t)
+
+	err := verify.Schema(&response, &schema, []error{})
+
+	if len(err) == 0 {
 		t.Fail()
 	}
 }

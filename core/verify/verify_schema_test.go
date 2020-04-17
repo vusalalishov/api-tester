@@ -58,7 +58,7 @@ func TestSchema_WillFindComplexMismatch(t *testing.T) {
 				"a": "b",
 				"c": [
 					{
-						"a": "k"
+						"a": 1
 					},
 					"b"
 				]
@@ -78,7 +78,7 @@ func TestSchema_WillFindComplexMismatch(t *testing.T) {
 				"a": "b",
 				"c": [
 					{
-						"a": "k1"
+						"a": "1"
 					},
 					"b"
 				]

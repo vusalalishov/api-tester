@@ -1,4 +1,5 @@
 {
-  "name": "{{ .userName }}",
-  "age": "{{ .userAge }}"
+  "name": "{{ .user.name }}",
+  "surname": {{ .user.surname }}
+  "age": "{{ .user.age }}"
 }

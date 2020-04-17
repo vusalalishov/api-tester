@@ -3,8 +3,11 @@
   "label": ["suite-1"],
   "protocol": "json",
   "declare": {
-    "userName": "John Doe",
-    "userAge": "30",
+    "user": {
+      "name": "John",
+      "surname": "Doe",
+      "age": "30"
+    },
     "baseUrl": "http://localhost"
   },
   "cases": [

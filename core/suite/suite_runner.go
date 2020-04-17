@@ -9,12 +9,12 @@ import (
 	"github.com/vusalalishov/api-tester/core/verify"
 )
 
-func RunSuite(suite model.Suite) *log.TestSuite {
+func RunSuite(suite model.Suite, templateDir string) *log.TestSuite {
 	suiteLog := log.NewSuite(suite.Title)
 	for _, testCase := range suite.Cases {
 		suiteLog.AddMessage(fmt.Sprintf("Running test case %s", testCase.Title))
 		testCaseLog := suiteLog.AddCase(testCase.Title)
-		err := runCase(&testCase, &suite.Declaration, testCaseLog)
+		err := runCase(&testCase, &suite.Declaration, templateDir, testCaseLog)
 		if err != nil {
 			suiteLog.SetStatus(log.FAILED)
 		}
@@ -22,14 +22,14 @@ func RunSuite(suite model.Suite) *log.TestSuite {
 	return suiteLog
 }
 
-func runCase(testCase *model.Case, declaration *model.Declaration, caseLog *log.TestCase) (err error) {
+func runCase(testCase *model.Case, declaration *model.Declaration, templateDir string, caseLog *log.TestCase) (err error) {
 
 	for _, scenario := range testCase.Scenarios {
 
 		scenarioLog := caseLog.AddScenario(scenario.Title)
 
 		try := scenario.Try
-		response, err := sendRequest(&try, declaration)
+		response, err := sendRequest(&try, declaration, templateDir)
 
 		if err != nil {
 			scenarioLog.SetStatus(log.FAILED)
@@ -48,8 +48,8 @@ func runCase(testCase *model.Case, declaration *model.Declaration, caseLog *log.
 	return err
 }
 
-func sendRequest(scenario *model.TryScenario, declaration *model.Declaration) (*http.Response, error) {
-	request, err := prepareHttpRequest(scenario, declaration)
+func sendRequest(scenario *model.TryScenario, declaration *model.Declaration, templateDir string) (*http.Response, error) {
+	request, err := prepareHttpRequest(scenario, declaration, templateDir)
 	if err != nil {
 		return nil, err
 	}

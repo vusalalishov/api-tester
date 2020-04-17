@@ -2,12 +2,13 @@ package suite
 
 import (
 	"bytes"
-	"encoding/json"
 	"github.com/vusalalishov/api-tester/core/http"
 	"github.com/vusalalishov/api-tester/core/model"
+	"io/ioutil"
+	"text/template"
 )
 
-func prepareHttpRequest(scenario *model.TryScenario, declaration *model.Declaration) (*http.Request, error) {
+func prepareHttpRequest(scenario *model.TryScenario, declaration *model.Declaration, templateDir string) (*http.Request, error) {
 	method := scenario.Method
 
 	var httpMethod http.Method
@@ -20,13 +21,29 @@ func prepareHttpRequest(scenario *model.TryScenario, declaration *model.Declarat
 	var reader *bytes.Reader
 
 	if scenario.Payload != nil {
-		payload, err := json.Marshal(scenario.Payload)
+
+		fileBytes, err := ioutil.ReadFile(templateDir + *scenario.Payload)
 
 		if err != nil {
 			return nil, err
 		}
 
-		reader = bytes.NewReader(payload)
+		tmpl, err := template.New("payload").Parse(string(fileBytes))
+
+		if err != nil {
+			return nil, err
+		}
+
+		var payloadBytes bytes.Buffer
+
+		err = tmpl.Execute(&payloadBytes, declaration)
+
+		if err != nil {
+			return nil, err
+		}
+
+		reader = bytes.NewReader(payloadBytes.Bytes())
+
 	}
 
 	// TODO: add headers

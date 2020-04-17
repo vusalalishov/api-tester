@@ -4,7 +4,7 @@ type Protocol string
 type HttpMethod string
 type HttpStatus int
 
-type Declaration map[string]interface{}
+type Declaration interface{}
 
 type HttpHeaders map[string]interface{}
 
@@ -12,7 +12,7 @@ type TryScenario struct {
 	Method  HttpMethod
 	Headers HttpHeaders
 	Url     string
-	Payload *map[string]interface{}
+	Payload *string
 }
 
 type VerifyScenario struct {

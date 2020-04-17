@@ -24,7 +24,7 @@ func main() {
 		panic(err)
 	}
 
-	log := suite.RunSuite(*s)
+	log := suite.RunSuite(*s, "resources/")
 
 	fmt.Println(log.Title)
 	fmt.Println(log.Status)

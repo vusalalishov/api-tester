@@ -24,7 +24,7 @@ func main() {
 		panic(err)
 	}
 
-	log := suite.RunSuite(*s, "resources/")
+	log := suite.RunSuite(*s, "resources/", "resources/scripts/")
 
 	fmt.Println(log.Title)
 	fmt.Println(log.Status)
@@ -36,6 +36,9 @@ func main() {
 		for _, scenario := range testCase.Scenarios {
 			fmt.Println(scenario.Title)
 			fmt.Println(scenario.Status)
+			for _, message := range scenario.Messages {
+				fmt.Println(message)
+			}
 		}
 
 	}

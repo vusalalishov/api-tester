@@ -29,6 +29,12 @@
             },
             "payload": "templates/create-user-payload.tpl"
           },
+          "extract": {
+            "user": {
+              "age": "{{ .data.age }}",
+              "fullname": "{{ .data.name }} {{ .data.surname }}"
+            }
+          },
           "verify": {
             "status": "200",
             "headers": {
@@ -36,10 +42,9 @@
               "key3": "value3"
             },
             "schema": {
-              "errorCode": "0",
-              "errorMessage": "",
-              "data": {
-                "userId": "1"
+              "tests": {
+                "user-created.js" : "isNameCorrect",
+                "user-common.js" : "isAgeCorrect"
               }
             }
           }
@@ -63,17 +68,8 @@
               "key3": "value3"
             },
             "schema": {
-              "errorCode": "0",
-              "errorMessage": "",
-              "data": {
-                "userId": "1",
-                "name": "John Doe",
-                "age": "15",
-                "phoneNumbers": [
-                  "1",
-                  "2",
-                  "3"
-                ]
+              "tests": {
+                "user-common.js" : "isAgeCorrect"
               }
             }
           }

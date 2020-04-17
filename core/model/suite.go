@@ -7,6 +7,7 @@ type HttpStatus int
 type Declaration interface{}
 
 type HttpHeaders map[string]interface{}
+type Tests map[string]string
 
 type TryScenario struct {
 	Method  HttpMethod
@@ -15,16 +16,21 @@ type TryScenario struct {
 	Payload *string
 }
 
+type Schema struct {
+	Tests *Tests
+}
+
 type VerifyScenario struct {
 	Status  HttpStatus `json:",string"`
 	Headers HttpHeaders
-	Schema  *interface{}
+	Schema  Schema
 }
 
 type Scenario struct {
-	Title  string
-	Try    TryScenario
-	Verify VerifyScenario
+	Title   string
+	Try     TryScenario
+	Extract *interface{}
+	Verify  VerifyScenario
 }
 
 type Case struct {

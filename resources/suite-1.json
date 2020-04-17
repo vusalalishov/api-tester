@@ -24,10 +24,7 @@
               ],
               "key3": "value3"
             },
-            "payload": {
-              "name": "${userName}",
-              "age": "${userAge}"
-            }
+            "payload": "templates/create-user-payload.tpl"
           },
           "verify": {
             "status": "200",

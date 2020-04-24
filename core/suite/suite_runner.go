@@ -3,6 +3,7 @@ package suite
 import (
 	"errors"
 	"fmt"
+	decl "github.com/vusalalishov/api-tester/core/declaration"
 	"github.com/vusalalishov/api-tester/core/http"
 	"github.com/vusalalishov/api-tester/core/log"
 	"github.com/vusalalishov/api-tester/core/model"
@@ -14,7 +15,11 @@ func RunSuite(suite model.Suite, templateDir string, scriptDir string) *log.Test
 	for _, testCase := range suite.Cases {
 		suiteLog.AddMessage(fmt.Sprintf("Running test case %s", testCase.Title))
 		testCaseLog := suiteLog.AddCase(testCase.Title)
-		err := runCase(&testCase, &suite.Declaration, templateDir, scriptDir, testCaseLog)
+		if suite.Declaration == nil {
+			d := model.Declaration(make(map[string]interface{}))
+			suite.Declaration = &d
+		}
+		err := runCase(&testCase, suite.Declaration, templateDir, scriptDir, testCaseLog)
 		if err != nil {
 			suiteLog.SetStatus(log.FAILED)
 		}
@@ -36,7 +41,12 @@ func runCase(testCase *model.Case, declaration *model.Declaration, templateDir s
 			break
 		}
 
-		enrichDeclaration(response, declaration)
+		enrichErr := decl.Enrich(response, declaration, scenario.Extract)
+		if enrichErr != nil {
+			scenarioLog.SetStatus(log.FAILED)
+			break
+		}
+
 		errorArr := verifyResponse(response, &scenario.Verify, scriptDir, declaration)
 
 		if len(errorArr) != 0 {
@@ -54,10 +64,6 @@ func sendRequest(scenario *model.TryScenario, declaration *model.Declaration, te
 		return nil, err
 	}
 	return request.Execute()
-}
-
-func enrichDeclaration(response *http.Response, declaration *model.Declaration) {
-	// TODO: implementation is missing
 }
 
 func verifyResponse(response *http.Response, scenario *model.VerifyScenario, scriptDir string, declaration *model.Declaration) []error {

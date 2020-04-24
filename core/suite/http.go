@@ -28,7 +28,7 @@ func prepareHttpRequest(scenario *model.TryScenario, declaration *model.Declarat
 		}
 	}
 
-	// TODO: add headers
+	// TODO: add headers : https://github.com/vusalalishov/api-tester/issues/10
 	return &http.Request{
 		Url:    scenario.Url,
 		Method: httpMethod,
@@ -37,6 +37,7 @@ func prepareHttpRequest(scenario *model.TryScenario, declaration *model.Declarat
 }
 
 func preparePayloadReader(scenario *model.TryScenario, declaration *model.Declaration, templateDir string) (*bytes.Reader, error) {
+
 	fileBytes, err := ioutil.ReadFile(templateDir + *scenario.Payload)
 
 	if err != nil {

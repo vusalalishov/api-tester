@@ -12,7 +12,7 @@ func main() {
 
 	s := &model.Suite{}
 
-	bytes, err := ioutil.ReadFile("resources/suite-1.json")
+	bytes, err := ioutil.ReadFile("resources/suite-2.json")
 
 	if err != nil {
 		panic(err)

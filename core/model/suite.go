@@ -4,16 +4,19 @@ type Protocol string
 type HttpMethod string
 type HttpStatus int
 
-type Declaration interface{}
+type Declaration map[string]interface{}
+
+type Extract map[string]interface{}
 
 type HttpHeaders map[string]interface{}
 type Tests map[string]string
 
 type TryScenario struct {
-	Method  HttpMethod
-	Headers HttpHeaders
-	Url     string
-	Payload *string
+	Method      HttpMethod
+	Headers     HttpHeaders
+	Url         string
+	Payload     *string
+	PayloadFile *string
 }
 
 type Schema struct {
@@ -29,7 +32,7 @@ type VerifyScenario struct {
 type Scenario struct {
 	Title   string
 	Try     TryScenario
-	Extract *interface{}
+	Extract *Extract
 	Verify  VerifyScenario
 }
 
@@ -43,6 +46,6 @@ type Suite struct {
 	Title       string
 	Label       []string
 	Protocol    Protocol
-	Declaration Declaration `json:"declare"`
+	Declaration *Declaration `json:"declare"`
 	Cases       []Case
 }

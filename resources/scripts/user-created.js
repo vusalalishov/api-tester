@@ -1,6 +1,6 @@
 function isNameCorrect(response) {
     return {
-        exitCode: 0,
+        exitCode: response.errorCode,
         message: ""
     }
 }

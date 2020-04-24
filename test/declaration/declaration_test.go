@@ -68,7 +68,7 @@ func TestEnrichDeepExtraction(t *testing.T) {
 	gVal, err := utils.NestedMapLookup(*decl, "a", "b", "c", "d", "g")
 	failOnError(err, t)
 
-	if kVal != "b" || fVal != "d" || gVal != "h" {
+	if kVal == "b" || fVal != "d" || gVal != "h" {
 		t.Fail()
 	}
 

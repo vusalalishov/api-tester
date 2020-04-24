@@ -7,20 +7,22 @@ import (
 	"os"
 )
 
+// TODO: this works for now, let's move on. Will get back to it when will have time for refactoring, see https://github.com/vusalalishov/api-tester/issues/8
 func Schema(response *interface{}, schema model.Schema, scriptDir string, failures []error) []error {
 	// read js file
 	if schema.Tests != nil {
 		for file, testMethod := range *schema.Tests {
 			script, err := os.Open(scriptDir + file)
 			if err == nil {
+				// create JS VM
 				vm := otto.New()
-				_, err := vm.Run(script)
 
-				if err != nil {
-					failures = append(failures, err)
+				// run the script - so the functions are created
+				if err := runScript(vm, script, failures); err != nil {
 					continue
 				}
 
+				// get the test method
 				fn, err := vm.Get(testMethod)
 
 				if err != nil {
@@ -28,6 +30,7 @@ func Schema(response *interface{}, schema model.Schema, scriptDir string, failur
 					continue
 				}
 
+				// turn response into JS object
 				val, err := vm.ToValue(*response)
 
 				if err != nil {
@@ -35,6 +38,7 @@ func Schema(response *interface{}, schema model.Schema, scriptDir string, failur
 					continue
 				}
 
+				// call the test method on response
 				testResult, err := fn.Call(otto.NullValue(), val)
 
 				if err != nil {
@@ -42,6 +46,7 @@ func Schema(response *interface{}, schema model.Schema, scriptDir string, failur
 					continue
 				}
 
+				// get the exitCodeValue from response
 				exitCodeVal, err := testResult.Object().Get("exitCode")
 
 				if err != nil {
@@ -62,8 +67,19 @@ func Schema(response *interface{}, schema model.Schema, scriptDir string, failur
 
 			} else {
 				failures = append(failures, err)
+				break
 			}
 		}
 	}
 	return failures
+}
+
+func runScript(vm *otto.Otto, script *os.File, failures []error) error {
+	_, err := vm.Run(script)
+
+	if err != nil {
+		failures = append(failures, err)
+		return err
+	}
+	return nil
 }

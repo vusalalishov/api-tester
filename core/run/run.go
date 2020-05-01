@@ -2,7 +2,7 @@ package run
 
 import (
 	"encoding/json"
-	"github.com/vusalalishov/api-tester/core/log"
+	"github.com/vusalalishov/api-tester/core/config"
 	"github.com/vusalalishov/api-tester/core/model"
 	"github.com/vusalalishov/api-tester/core/suite"
 	"io/ioutil"
@@ -10,47 +10,46 @@ import (
 	"strings"
 )
 
-func AllSuites(baseDir string) ([]*log.TestSuite, error) {
-	fileInfos, err := ioutil.ReadDir(baseDir)
+func AllSuites() error {
+	fileInfos, err := ioutil.ReadDir(config.GetSuiteDir())
 
 	if err != nil {
-		return nil, err
+		return err
 	}
-
-	var logs = make([]*log.TestSuite, 0)
 
 	for _, fileInfo := range fileInfos {
 		if isJsonFile(fileInfo) {
-			suiteLog, err := Suite(baseDir, fileInfo.Name())
+			err := Suite(fileInfo.Name())
 			if err != nil {
-				return logs, err
+				return err
 			}
-			logs = append(logs, suiteLog)
 		}
 	}
 
-	return logs, nil
+	return nil
 }
 
-func Suite(baseDir string, suiteName string) (*log.TestSuite, error) {
+func Suite(suiteName string) error {
 
-	suitePath := baseDir + "/" + suiteName
+	suitePath := config.SuiteDir(suiteName)
 
 	s := &model.Suite{}
 
 	bytes, err := ioutil.ReadFile(suitePath)
 
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	err = json.Unmarshal(bytes, s)
 
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	return suite.RunSuite(*s), nil
+	suite.RunSuite(*s)
+
+	return nil
 }
 
 func isJsonFile(file os.FileInfo) bool {

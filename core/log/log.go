@@ -3,53 +3,45 @@ package log
 import (
 	"fmt"
 	"github.com/vusalalishov/api-tester/core/http"
+	"github.com/vusalalishov/api-tester/core/model"
 )
 
-type Status int
-
-const (
-	SUCCESS Status = 0
-	FAILED  Status = 1
-)
-
-type testInfo struct {
-	Status   Status
-	Messages []*string
+func RunningSuite(title string) {
+	fPrintln("Running suite: [%s] ...", title)
 }
 
-type TestSuite struct {
-	Title string
-	Cases []*TestCase
-	testInfo
+func RunningTestCase(title string) {
+	fPrintln("Running test case: [%s] ...", title)
 }
 
-func (s *TestSuite) Print() {
-	fmt.Println(s.Title)
-	fmt.Println(s.Status)
+func RunningScenario(title string) {
+	fPrintln("Running scenario: [%s] ...", title)
+}
 
-	for _, testCase := range s.Cases {
-		fmt.Println(testCase.Title)
-		fmt.Println(testCase.Status)
+func ScenarioFailed(scenario model.Scenario, response *http.Response, reason error) {
+	fPrintln("Scenario: [%s] is FAILED with reason: [%s]", scenario.Title, reason.Error())
+}
 
-		for _, scenario := range testCase.Scenarios {
-			fmt.Println(scenario.Title)
-			fmt.Println(scenario.Status)
-			for _, message := range scenario.Messages {
-				fmt.Println(message)
-			}
-		}
-
+func CaseCompleted(testCase *model.Case, isPassed bool, reason error) {
+	if isPassed {
+		fPrintln("Test case: [%s] is PASSED", testCase.Title)
+	} else {
+		fPrintln("Test case: [%s] is FAILED with reason: [%s]", testCase.Title, reason.Error())
 	}
 }
 
-type TestCase struct {
-	Title     string
-	Scenarios []*TestScenario
-	testInfo
+func ScenarioPassed(scenario model.Scenario) {
+	fPrintln("Scenario: [%s] is PASSED", scenario.Title)
 }
 
-type TestScenario struct {
-	Title string
-	testInfo
-	OriginalPayload http.Response
+func SuiteCompleted(suite model.Suite, isPassed bool) {
+	if isPassed {
+		fPrintln("Suite: [%s] is PASSED", suite.Title)
+	} else {
+		fPrintln("Suite: [%s] is FAILED", suite.Title)
+	}
+}
+
+func fPrintln(format string, a ...interface{}) {
+	fmt.Printf(format+"\n", a)
 }

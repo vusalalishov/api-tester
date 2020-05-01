@@ -3,16 +3,17 @@ package verify
 import (
 	"errors"
 	"github.com/robertkrimen/otto"
+	"github.com/vusalalishov/api-tester/core/config"
 	"github.com/vusalalishov/api-tester/core/model"
 	"os"
 )
 
 // TODO: this works for now, let's move on. Will get back to it when will have time for refactoring, see https://github.com/vusalalishov/api-tester/issues/8
-func Schema(response *interface{}, schema model.Schema, scriptDir string, failures []error) []error {
+func Schema(response *interface{}, schema model.Schema, failures []error) []error {
 	// read js file
 	if schema.Tests != nil {
 		for file, testMethod := range *schema.Tests {
-			script, err := os.Open(scriptDir + file)
+			script, err := os.Open(config.ScriptDir(file))
 			if err == nil {
 				// create JS VM
 				vm := otto.New()

@@ -2,13 +2,14 @@ package suite
 
 import (
 	"bytes"
+	"github.com/vusalalishov/api-tester/core/config"
 	"github.com/vusalalishov/api-tester/core/http"
 	"github.com/vusalalishov/api-tester/core/model"
 	"io/ioutil"
 	"text/template"
 )
 
-func prepareHttpRequest(scenario *model.TryScenario, declaration *model.Declaration, templateDir string) (*http.Request, error) {
+func prepareHttpRequest(scenario *model.TryScenario, declaration *model.Declaration) (*http.Request, error) {
 	method := scenario.Method
 
 	var httpMethod http.Method
@@ -21,7 +22,7 @@ func prepareHttpRequest(scenario *model.TryScenario, declaration *model.Declarat
 	var reader *bytes.Reader
 	if scenario.Payload != nil {
 		var err error
-		reader, err = preparePayloadReader(scenario, declaration, templateDir)
+		reader, err = preparePayloadReader(scenario, declaration)
 
 		if err != nil {
 			return nil, err
@@ -36,9 +37,9 @@ func prepareHttpRequest(scenario *model.TryScenario, declaration *model.Declarat
 	}, nil
 }
 
-func preparePayloadReader(scenario *model.TryScenario, declaration *model.Declaration, templateDir string) (*bytes.Reader, error) {
+func preparePayloadReader(scenario *model.TryScenario, declaration *model.Declaration) (*bytes.Reader, error) {
 
-	fileBytes, err := ioutil.ReadFile(templateDir + *scenario.Payload)
+	fileBytes, err := ioutil.ReadFile(config.PayloadDir(*scenario.Payload))
 
 	if err != nil {
 		return nil, err

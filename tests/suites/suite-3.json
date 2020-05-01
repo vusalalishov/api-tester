@@ -1,0 +1,40 @@
+{
+  "title": "Test user retrieval",
+  "label": ["suite-1"],
+  "protocol": "json",
+  "declare": {
+    "user": {
+      "name": "John",
+      "surname": "Doe",
+      "age": "30"
+    },
+    "baseUrl": "http://localhost"
+  },
+  "cases": [
+    {
+      "title": "Test if user retrieved successfully [must fail]",
+      "labels": ["case-2"],
+      "scenarios": [
+        {
+          "title": "Get user must fail",
+          "try": {
+            "method": "GET",
+            "url": "http://localhost:3000/get/1"
+          },
+          "verify": {
+            "status": "200",
+            "headers": {
+              "key1": ["value1", "value2"],
+              "key3": "value3"
+            },
+            "schema": {
+              "tests": {
+                "user-fail-always.js" : "failIt"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -27,36 +27,39 @@ func RunSuite(suite model.Suite) {
 	log.SuiteCompleted(suite, suiteIsPassed)
 }
 
-func runCase(testCase *model.Case, declaration *model.Declaration) (isPassed bool, err error) {
+func runCase(testCase *model.Case, declaration *model.Declaration) (bool, error) {
 
 	var isFailed = false
+	var err error = nil
 
 	for _, scenario := range testCase.Scenarios {
 
 		log.RunningScenario(scenario.Title)
 
 		try := scenario.Try
-		response, err := sendRequest(&try, declaration)
+		response, sendingError := sendRequest(&try, declaration)
 
-		if err != nil {
-			log.ScenarioFailed(scenario, response, err)
+		if sendingError != nil {
+			log.ScenarioFailed(scenario, response, sendingError)
+			err = sendingError
 			isFailed = true
 			break
 		}
 
 		enrichErr := decl.Enrich(response, declaration, scenario.Extract)
 		if enrichErr != nil {
-			log.ScenarioFailed(scenario, response, err)
+			log.ScenarioFailed(scenario, response, enrichErr)
 			isFailed = true
+			err = enrichErr
 			break
 		}
 
 		errorArr := verifyResponse(response, &scenario.Verify, declaration)
 
 		if len(errorArr) != 0 {
-			log.ScenarioFailed(scenario, response, err)
 			isFailed = true
 			err = errors.New("response verification error")
+			log.ScenarioFailed(scenario, response, err)
 			break
 		}
 

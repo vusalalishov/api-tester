@@ -5,15 +5,14 @@ go:
 
 go_import_path: github.com/vusalalishov/api-tester
 
-install:
-  - go get -v github.com/codeclimate/test-reporter
+before_install:
+  - go get github.com/modocache/gover
+  - go get github.com/mattn/goveralls
 
-before_script:
-  - test-reporter before-build
 script:
-  - go test -coverprofile c.out github.com/vusalalishov/api-tester/...
-after_script:
-  - test-reporter after-build --coverage-input-type gocov --exit-code $TRAVIS_TEST_RESULT
+  - go test -v github.com/vusalalishov/api-tester/... -coverprofile=all.coverptofile
+  - gover
+  - goveralls -coverprofile gover.coverprofile -service travis-ci
 
 notifications:
   email:

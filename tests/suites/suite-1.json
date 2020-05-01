@@ -27,11 +27,10 @@
               ],
               "key3": "value3"
             },
-            "payload": "templates/create-user-payload.tpl"
+            "payload": "create-user-payload.tpl"
           },
           "extract": {
             "user": {
-              "name": "{{ .data.name }}",
               "age": "{{ .data.age }}",
               "fullname": "{{ .data.name }} {{ .data.surname }}"
             }
@@ -62,7 +61,7 @@
               ],
               "key3": "value3"
             },
-            "payload": "templates/create-user-payload.tpl"
+            "payload": "create-user-payload.tpl"
           },
           "extract": {
             "user": {
@@ -79,6 +78,31 @@
             "schema": {
               "tests": {
                 "user-created.js" : "isNameCorrect",
+                "user-common.js" : "isAgeCorrect"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "Test if user retrieved successfully",
+      "labels": ["case-2"],
+      "scenarios": [
+        {
+          "title": "Get user!",
+          "try": {
+            "method": "GET",
+            "url": "http://localhost:3000/get/1"
+          },
+          "verify": {
+            "status": "200",
+            "headers": {
+              "key1": ["value1", "value2"],
+              "key3": "value3"
+            },
+            "schema": {
+              "tests": {
                 "user-common.js" : "isAgeCorrect"
               }
             }

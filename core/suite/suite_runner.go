@@ -10,7 +10,7 @@ import (
 	"github.com/vusalalishov/api-tester/core/verify"
 )
 
-func RunSuite(suite model.Suite, templateDir string, scriptDir string) *log.TestSuite {
+func RunSuite(suite model.Suite) *log.TestSuite {
 	suiteLog := log.NewSuite(suite.Title)
 	for _, testCase := range suite.Cases {
 		suiteLog.AddMessage(fmt.Sprintf("Running test case %s", testCase.Title))
@@ -19,7 +19,7 @@ func RunSuite(suite model.Suite, templateDir string, scriptDir string) *log.Test
 			d := model.Declaration(make(map[string]interface{}))
 			suite.Declaration = &d
 		}
-		err := runCase(&testCase, suite.Declaration, templateDir, scriptDir, testCaseLog)
+		err := runCase(&testCase, suite.Declaration, "payloads/", "scripts/", testCaseLog)
 		if err != nil {
 			suiteLog.SetStatus(log.FAILED)
 		}

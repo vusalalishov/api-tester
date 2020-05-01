@@ -10,7 +10,7 @@ type Response struct {
 	Message string
 }
 
-func Test(t *testing.T) {
+func TestSchema(t *testing.T) {
 	vm := otto.New()
 
 	_, err := vm.ToValue(map[string]interface{}{

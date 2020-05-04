@@ -8,7 +8,7 @@ type Declaration map[string]interface{}
 
 type Extract map[string]interface{}
 
-type HttpHeaders map[string]interface{}
+type HttpHeaders map[string]string
 type Tests map[string]string
 
 type TryScenario struct {

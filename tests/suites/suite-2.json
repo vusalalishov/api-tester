@@ -21,10 +21,7 @@
             "method": "POST",
             "url": "http://localhost:3000/create",
             "headers": {
-              "key1": [
-                "value1",
-                "value2"
-              ],
+              "key1": "value1, value2",
               "key3": "value3"
             },
             "payload": "create-user-payload.tpl"
@@ -39,7 +36,7 @@
           "verify": {
             "status": "200",
             "headers": {
-              "key1": ["value1", "value2"],
+              "key1": "value1, value2",
               "key3": "value3"
             },
             "schema": {
@@ -56,10 +53,7 @@
             "method": "POST",
             "url": "http://localhost:3000/create",
             "headers": {
-              "key1": [
-                "value1",
-                "value2"
-              ],
+              "key1": "value1, value2",
               "key3": "value3"
             },
             "payload": "create-user-payload.tpl"
@@ -73,7 +67,7 @@
           "verify": {
             "status": "200",
             "headers": {
-              "key1": ["value1", "value2"],
+              "key1": "value1, value2",
               "key3": "value3"
             },
             "schema": {

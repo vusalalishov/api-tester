@@ -3,8 +3,8 @@ package http
 import (
 	"bytes"
 	"encoding/json"
-	"errors"
-	"io/ioutil"
+	"github.com/ddo/rq"
+	"github.com/ddo/rq/client"
 	"net/http"
 )
 
@@ -37,39 +37,34 @@ func (r *Request) Execute() (response *Response, err error) {
 
 	var httpResponse *http.Response
 
-	if r.Method == POST {
-		httpResponse, err = http.Post(r.Url, "application/json", r.Body)
-		if err != nil {
-			return nil, err
-		}
-	} else if r.Method == GET {
-		httpResponse, err = http.Get(r.Url)
-		if err != nil {
-			return nil, err
+	httpRequest := rq.New(string(r.Method), r.Url)
+	httpRequest.Set("Content-Type", "application/json")
+
+	if r.Headers != nil {
+		for _, h := range r.Headers {
+			httpRequest.Set(h.Key, h.Value)
 		}
 	}
 
-	if httpResponse != nil {
-
-		bodyBytes, err := ioutil.ReadAll(httpResponse.Body)
-		if err != nil {
-			return nil, err
-		}
-
-		var responseBody interface{}
-
-		err = json.Unmarshal(bodyBytes, &responseBody)
-		if err != nil {
-			return nil, err
-		}
-
-		return &Response{
-			Body:   &responseBody,
-			Status: Status(httpResponse.StatusCode),
-		}, nil
-
-	} else {
-		return nil, errors.New("http.Response is nil")
+	if r.Body != nil {
+		httpRequest.SendRaw(r.Body)
 	}
+
+	responseBytes, httpResponse, err := client.Send(httpRequest, true)
+	if err != nil {
+		return nil, err
+	}
+
+	var responseBody interface{}
+
+	err = json.Unmarshal(responseBytes, &responseBody)
+	if err != nil {
+		return nil, err
+	}
+
+	return &Response{
+		Body:   &responseBody,
+		Status: Status(httpResponse.StatusCode),
+	}, nil
 
 }

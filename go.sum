@@ -1,3 +1,5 @@
+github.com/ddo/rq v0.0.0-20190828174524-b3daa55fcaba h1:EMLQSxP68m4ddJpmMT+LizYO0AjrROprPXjll2CARj0=
+github.com/ddo/rq v0.0.0-20190828174524-b3daa55fcaba/go.mod h1:XIayI7kdKklkc7yyWDBYMJLbK/AO4AchQUxdoSFcn+k=
 github.com/robertkrimen/otto v0.0.0-20191219234010-c382bd3c16ff h1:+6NUiITWwE5q1KO6SAfUX918c+Tab0+tGAM/mtdlUyA=
 github.com/robertkrimen/otto v0.0.0-20191219234010-c382bd3c16ff/go.mod h1:xvqspoSXJTIpemEonrMDFq6XzwHYYgToXWj5eRX1OtY=
 github.com/yuin/goldmark v1.1.27/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
@@ -18,5 +20,7 @@ golang.org/x/tools v0.0.0-20200501065659-ab2804fb9c9d/go.mod h1:EkVYQZoAsY45+roY
 golang.org/x/xerrors v0.0.0-20190717185122-a985d3407aa7/go.mod h1:I/5z698sn9Ka8TeJc9MKroUUfqBBauWjQqLJ2OPfmY0=
 golang.org/x/xerrors v0.0.0-20191011141410-1b5146add898/go.mod h1:I/5z698sn9Ka8TeJc9MKroUUfqBBauWjQqLJ2OPfmY0=
 golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543/go.mod h1:I/5z698sn9Ka8TeJc9MKroUUfqBBauWjQqLJ2OPfmY0=
+gopkg.in/ddo/go-dlog.v2 v2.1.0 h1:SrIltB+SYmJLJZp/5vGKGLUpk2VCfLUM1V3jGs7RSh4=
+gopkg.in/ddo/go-dlog.v2 v2.1.0/go.mod h1:CENm6saSBTtC4/HLiyEnKte/MHgJ/LECoptlS6oHBVI=
 gopkg.in/sourcemap.v1 v1.0.5 h1:inv58fC9f9J3TK2Y2R1NPntXEn3/wjWHkonhIUODNTI=
 gopkg.in/sourcemap.v1 v1.0.5/go.mod h1:2RlvNNSMglmRrcvhfuzp4hQHwOtjxlbjX7UPY/GXb78=

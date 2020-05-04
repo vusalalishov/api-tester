@@ -24,7 +24,7 @@
           "verify": {
             "status": "200",
             "headers": {
-              "key1": ["value1", "value2"],
+              "key1": "value1, value2",
               "key3": "value3"
             },
             "schema": {

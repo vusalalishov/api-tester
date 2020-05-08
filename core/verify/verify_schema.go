@@ -4,12 +4,13 @@ import (
 	"errors"
 	"github.com/robertkrimen/otto"
 	"github.com/vusalalishov/rapit/core/config"
+	"github.com/vusalalishov/rapit/core/http"
 	"github.com/vusalalishov/rapit/core/model"
 	"os"
 )
 
 // TODO: this works for now, let's move on. Will get back to it when will have time for refactoring, see https://github.com/vusalalishov/rapit/issues/8
-func Schema(response *interface{}, schema model.Schema, failures []error) []error {
+func Schema(response *http.Response, declaration *model.Declaration, schema model.Schema, failures []error) []error {
 	// read js file
 	if schema.Tests != nil {
 		for file, testMethod := range *schema.Tests {
@@ -32,7 +33,15 @@ func Schema(response *interface{}, schema model.Schema, failures []error) []erro
 				}
 
 				// turn response into JS object
-				val, err := vm.ToValue(*response)
+				jsResponseVal, err := vm.ToValue(*response)
+
+				if err != nil {
+					failures = append(failures, err)
+					continue
+				}
+
+				// turn response into JS object
+				jsDeclarationVal, err := vm.ToValue(*declaration)
 
 				if err != nil {
 					failures = append(failures, err)
@@ -40,7 +49,7 @@ func Schema(response *interface{}, schema model.Schema, failures []error) []erro
 				}
 
 				// call the test method on response
-				testResult, err := fn.Call(otto.NullValue(), val)
+				testResult, err := fn.Call(otto.NullValue(), jsDeclarationVal, jsResponseVal)
 
 				if err != nil {
 					failures = append(failures, err)

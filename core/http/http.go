@@ -6,6 +6,7 @@ import (
 	"github.com/ddo/rq"
 	"github.com/ddo/rq/client"
 	"net/http"
+	"strings"
 )
 
 type Method string
@@ -29,8 +30,9 @@ type Request struct {
 }
 
 type Response struct {
-	Status Status
-	Body   *interface{}
+	Status  Status
+	Body    *interface{}
+	Headers []Header
 }
 
 func (r *Request) Execute() (response *Response, err error) {
@@ -60,6 +62,15 @@ func (r *Request) Execute() (response *Response, err error) {
 	err = json.Unmarshal(responseBytes, &responseBody)
 	if err != nil {
 		return nil, err
+	}
+
+	responseHeaders := make([]Header, 0)
+
+	for k, v := range httpResponse.Header {
+		responseHeaders = append(responseHeaders, Header{
+			Key:   k,
+			Value: strings.Join(v, ""),
+		})
 	}
 
 	return &Response{

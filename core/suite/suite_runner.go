@@ -81,5 +81,5 @@ func verifyResponse(response *http.Response, scenario *model.VerifyScenario, dec
 	if response.Status != http.Status(scenario.Status) {
 		return []error{errors.New("status mismatch")}
 	}
-	return verify.Schema(response.Body, scenario.Schema, make([]error, 0))
+	return verify.Schema(response, declaration, scenario.Schema, make([]error, 0))
 }

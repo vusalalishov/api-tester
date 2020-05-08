@@ -1,6 +1,6 @@
-function failIt(response) {
+function failIt(declarations, response) {
     return {
-        exitCode: 0,
+        exitCode: response.errorCode ? 11 : 0,
         message: "Failed"
     }
 }

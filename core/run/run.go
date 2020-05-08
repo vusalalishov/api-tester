@@ -2,9 +2,9 @@ package run
 
 import (
 	"encoding/json"
-	"github.com/vusalalishov/api-tester/core/config"
-	"github.com/vusalalishov/api-tester/core/model"
-	"github.com/vusalalishov/api-tester/core/suite"
+	"github.com/vusalalishov/rapit/core/config"
+	"github.com/vusalalishov/rapit/core/model"
+	"github.com/vusalalishov/rapit/core/suite"
 	"io/ioutil"
 	"os"
 	"strings"
@@ -29,9 +29,9 @@ func AllSuites() error {
 	return nil
 }
 
-func Suite(suiteName string) error {
+func Suite(suiteFile string) error {
 
-	suitePath := config.SuiteDir(suiteName)
+	suitePath := config.SuiteDir(suiteFile)
 
 	s := &model.Suite{}
 

@@ -2,9 +2,9 @@ package suite
 
 import (
 	"bytes"
-	"github.com/vusalalishov/api-tester/core/config"
-	"github.com/vusalalishov/api-tester/core/http"
-	"github.com/vusalalishov/api-tester/core/model"
+	"github.com/vusalalishov/rapit/core/config"
+	"github.com/vusalalishov/rapit/core/http"
+	"github.com/vusalalishov/rapit/core/model"
 	"io/ioutil"
 	"text/template"
 )
@@ -58,13 +58,13 @@ func prepareHttpHeaders(headers model.HttpHeaders, declaration *model.Declaratio
 }
 
 func executeTemplate(valTemplate string, declaration *model.Declaration) (string, error) {
-	var bytes bytes.Buffer
+	var bytesBuff bytes.Buffer
 	t := template.Must(template.New("headerTemplate").Parse(valTemplate))
-	err := t.Execute(&bytes, declaration)
+	err := t.Execute(&bytesBuff, declaration)
 	if err != nil {
 		return "", err
 	}
-	return bytes.String(), nil
+	return bytesBuff.String(), nil
 }
 
 func preparePayloadReader(scenario *model.TryScenario, declaration *model.Declaration) (*bytes.Reader, error) {

@@ -3,12 +3,12 @@ package verify
 import (
 	"errors"
 	"github.com/robertkrimen/otto"
-	"github.com/vusalalishov/api-tester/core/config"
-	"github.com/vusalalishov/api-tester/core/model"
+	"github.com/vusalalishov/rapit/core/config"
+	"github.com/vusalalishov/rapit/core/model"
 	"os"
 )
 
-// TODO: this works for now, let's move on. Will get back to it when will have time for refactoring, see https://github.com/vusalalishov/api-tester/issues/8
+// TODO: this works for now, let's move on. Will get back to it when will have time for refactoring, see https://github.com/vusalalishov/rapit/issues/8
 func Schema(response *interface{}, schema model.Schema, failures []error) []error {
 	// read js file
 	if schema.Tests != nil {

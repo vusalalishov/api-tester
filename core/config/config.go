@@ -2,18 +2,17 @@ package config
 
 type RunConfiguration struct {
 	BaseDir string
+	Suite   *string
 }
 
 var runConfig *RunConfiguration
 
-func Init(baseDir string) {
-	runConfig = &RunConfiguration{
-		BaseDir: baseDir,
-	}
+func initialize(cfg *RunConfiguration) {
+	runConfig = cfg
 }
 
-func GetBaseDir() string {
-	return runConfig.BaseDir
+func SuiteDir(suiteFile string) string {
+	return GetSuiteDir() + "/" + suiteFile
 }
 
 func GetSuiteDir() string {
@@ -26,8 +25,4 @@ func ScriptDir(scriptFile string) string {
 
 func PayloadDir(file string) string {
 	return runConfig.BaseDir + "/payloads/" + file
-}
-
-func SuiteDir(file string) string {
-	return runConfig.BaseDir + "/suites/" + file
 }

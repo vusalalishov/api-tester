@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
-	"github.com/vusalalishov/api-tester/core/http"
-	"github.com/vusalalishov/api-tester/core/model"
+	"github.com/vusalalishov/rapit/core/http"
+	"github.com/vusalalishov/rapit/core/model"
 	"reflect"
 	"text/template"
 )

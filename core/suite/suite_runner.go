@@ -2,11 +2,11 @@ package suite
 
 import (
 	"errors"
-	decl "github.com/vusalalishov/api-tester/core/declaration"
-	"github.com/vusalalishov/api-tester/core/http"
-	"github.com/vusalalishov/api-tester/core/log"
-	"github.com/vusalalishov/api-tester/core/model"
-	"github.com/vusalalishov/api-tester/core/verify"
+	decl "github.com/vusalalishov/rapit/core/declaration"
+	"github.com/vusalalishov/rapit/core/http"
+	"github.com/vusalalishov/rapit/core/log"
+	"github.com/vusalalishov/rapit/core/model"
+	"github.com/vusalalishov/rapit/core/verify"
 )
 
 func RunSuite(suite model.Suite) {

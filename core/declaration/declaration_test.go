@@ -2,10 +2,10 @@ package declaration_test
 
 import (
 	"encoding/json"
-	"github.com/vusalalishov/api-tester/core/declaration"
-	"github.com/vusalalishov/api-tester/core/http"
-	"github.com/vusalalishov/api-tester/core/model"
-	"github.com/vusalalishov/api-tester/test/utils"
+	"github.com/vusalalishov/rapit/core/declaration"
+	"github.com/vusalalishov/rapit/core/http"
+	"github.com/vusalalishov/rapit/core/model"
+	"github.com/vusalalishov/rapit/test/utils"
 	"testing"
 )
 

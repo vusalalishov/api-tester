@@ -1,12 +1,17 @@
 package main
 
 import (
-	"github.com/vusalalishov/api-tester/core/config"
-	"github.com/vusalalishov/api-tester/core/run"
+	"github.com/vusalalishov/rapit/core/config"
+	"github.com/vusalalishov/rapit/core/run"
 )
 
 func main() {
-	config.Init("/Users/vusalalishov/projects/go/src/api-tester/tests")
+
+	err := config.InitConfig()
+	if err != nil {
+		panic(err)
+	}
+
 	if err := run.AllSuites(); err != nil {
 		panic(err)
 	}

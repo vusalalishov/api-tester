@@ -1,6 +1,6 @@
 function failIt(response) {
     return {
-        exitCode: 100,
+        exitCode: 0,
         message: "Failed"
     }
 }

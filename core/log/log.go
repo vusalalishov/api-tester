@@ -2,8 +2,8 @@ package log
 
 import (
 	"fmt"
-	"github.com/vusalalishov/api-tester/core/http"
-	"github.com/vusalalishov/api-tester/core/model"
+	"github.com/vusalalishov/rapit/core/http"
+	"github.com/vusalalishov/rapit/core/model"
 )
 
 func RunningSuite(title string) {
